@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoAdventures - Preorder Pico</title>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Baloo 2', cursive;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background-image: url('imgs/bg.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(3px);
+            z-index: 1;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            backdrop-filter: blur(5px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            margin-top: 4px;
+        }
+
+        .title-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 5px;
+            gap: 8px;
+        }
+
+        h1 {
+            color: #2e5c2c;
+            margin: 0;
+            padding: 0;
+            font-size: 2.5rem;
+            font-weight: 600;
+            display: inline-block;
+            line-height: 1;
+        }
+
+        .subtext {
+            color: #2e5c2c;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        input[type="email"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #eafbe7;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        input[type="email"]:focus {
+            outline: none;
+            border-color: #2e5c2c;
+            box-shadow: 0 0 0 3px rgba(46, 92, 44, 0.1);
+        }
+
+        button {
+            background-color: #2e5c2c;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            background-color: #3a7a38;
+            box-shadow: 0 4px 12px rgba(46, 92, 44, 0.2);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .pico-character {
+            width: 120px;
+            height: 120px;
+            margin: 10px auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .pico-character:hover {
+            transform: scale(1.05);
+        }
+
+        .thank-you {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .thank-you .pico-character {
+            animation: bounce 1s ease infinite;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .subtext {
+                font-size: 1.1rem;
+            }
+
+            .pico-character {
+                width: 100px;
+                height: 100px;
+            }
+        }
+
+        .error-message {
+            color: #dc3545;
+            font-size: 0.9rem;
+            margin-top: 8px;
+            display: none;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        input[type="email"].error {
+            border-color: #dc3545;
+            animation: shake 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="signup-form">
+            <div class="title-container">
+                <img src="imgs/leaf logo.png" alt="Eco Adventures Leaf Logo" class="logo">
+                <h1>Eco Adventures</h1>
+            </div>
+            <p class="subtext">Be the first to explore Pico!</p>
+            <img src="imgs/pico.png" alt="Pico Character" class="pico-character">
+            <div class="form-group">
+                <input type="email" id="email" placeholder="Enter your email" required>
+                <div id="error-message" class="error-message">Please enter your email address</div>
+            </div>
+            <button onclick="handleSignup()">Sign Up</button>
+        </div>
+        <div id="thank-you" class="thank-you">
+            <h1>🎉 Thank you for signing up!</h1>
+            <p class="subtext">Pico can't wait to meet you!</p>
+            <img src="imgs/pico.png" alt="Pico Character" class="pico-character">
+        </div>
+    </div>
+
+    <script>
+        function handleSignup() {
+            const email = document.getElementById('email').value;
+            const emailInput = document.getElementById('email');
+            const errorMessage = document.getElementById('error-message');
+            
+            if (!email) {
+                emailInput.classList.add('error');
+                errorMessage.style.display = 'block';
+                return;
+            }
+            
+            // Basic email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                errorMessage.textContent = 'Please enter a valid email address';
+                emailInput.classList.add('error');
+                errorMessage.style.display = 'block';
+                return;
+            }
+
+            // If validation passes, proceed with signup
+            document.getElementById('signup-form').style.display = 'none';
+            document.getElementById('thank-you').style.display = 'block';
+        }
+
+        // Clear error when user starts typing
+        document.getElementById('email').addEventListener('input', function() {
+            this.classList.remove('error');
+            document.getElementById('error-message').style.display = 'none';
+        });
+    </script>
+</body>
+</html> 
